@@ -48,6 +48,8 @@ export async function verificarLayout({ page, peticiones, errores }: Sesion): Pr
   const kit = peticiones.filter((p) => p.url.includes("is-webcomponents"));
   assert.ok(kit.length > 0, "el kit se carga desde el CDN");
   for (const p of kit) assert.match(p.url, /is-webcomponents@[0-9a-f]{40}\//, "kit fijado a SHA: " + p.url);
+  const shas = new Set(kit.map((p) => p.url.match(/is-webcomponents@([0-9a-f]{40})\//)?.[1]));
+  assert.equal(shas.size, 1, "loader e iconos del kit al mismo SHA: " + [...shas].join(", "));
   const shell = page.locator("iswc-app-shell");
   assert.equal(await shell.count(), 1, "un único app-shell");
   assert.equal((await shell.locator('[part="brand-text"]').textContent())?.trim(), "Usuarios", "marca Usuarios");
@@ -62,6 +64,13 @@ export async function verificarLayout({ page, peticiones, errores }: Sesion): Pr
   assert.ok(enBarra, "la sesión está a la derecha de la barra común");
   const propio = await page.evaluate(() => document.querySelectorAll("header, iswc-login").length);
   assert.equal(propio, 0, "sin barra propia ni login a pantalla completa");
+  const padding = await page.evaluate(() => {
+    const body = document.querySelector("usrs-app iswc-card")?.shadowRoot?.querySelector('[part="body"]');
+    return body ? parseFloat(getComputedStyle(body).paddingLeft) : 0;
+  });
+  assert.ok(padding >= 8, "la tarjeta de la vista tiene aire interior (padding " + padding + "px)");
+  const iconify = peticiones.filter((p) => ICONOS.test(p.url)).map((p) => p.url);
+  assert.deepEqual(iconify, [], "los iconos salen de la carpeta del kit fijado, no de api.iconify.design");
   assert.deepEqual(errores, [], "sin errores de consola");
 }
 

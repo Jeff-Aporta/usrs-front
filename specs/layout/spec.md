@@ -14,6 +14,8 @@ Verificación en el VPS: `deno task verificar:vps` (mismos escenarios contra el 
   con la sección "Usuarios" activa) y la sesión (`<iswc-session-menu>`) a la derecha.
 - La app no pinta una barra propia ni un login a pantalla completa.
 - Al cargar, la consola no registra errores.
+- La tarjeta de la vista tiene aire interior (padding visible).
+- Los iconos salen del kit fijado al mismo SHA; la página no pide iconos a `api.iconify.design`.
 
 ### S-U2 Sin sesión se inicia sesión desde la barra
 

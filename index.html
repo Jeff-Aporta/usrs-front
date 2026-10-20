@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="es" data-theme="dark" data-palette="contapyme">
+<html lang="es" data-theme="dark" data-palette="contapyme"
+      data-icons="https://cdn.jsdelivr.net/gh/Jeff-Aporta/is-webcomponents@aebd1850cde940e967076675ab422c7116c9909b/assets/iconify/">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -15,10 +16,9 @@
 <body>
   <noscript>JavaScript requerido.</noscript>
   <!-- Layout común del kit iswc: barra (marca + navegación + sesión) y vista con scroll propio. -->
-  <iswc-app-shell id="shell" brand="Usuarios" logo="mdi:account-group" home-label="Ir a Usuarios" toast="bottom-end">
-    <iswc-app-nav id="nav" slot="nav" rows='[{"id":"seccion","label":"Secciones","value":"usuarios","tabs":[{"id":"usuarios","label":"Usuarios","icon":"mdi:account-multiple"}]}]'></iswc-app-nav>
-    <!-- <iswc-session-menu id="sesion" slot="actions"> lo inserta src/usrs-app.js tras cargar el kit
-         (workaround de un fallo del kit al actualizarse ya conectado; ver README). -->
+  <iswc-app-shell id="shell" brand="Usuarios" logo="mdi:account-group-outline" home-label="Ir a Usuarios" toast="bottom-end">
+    <iswc-app-nav id="nav" slot="nav" rows='[{"id":"seccion","label":"Secciones","value":"usuarios","tabs":[{"id":"usuarios","label":"Usuarios","icon":"mdi:account-group-outline"}]}]'></iswc-app-nav>
+    <iswc-session-menu id="sesion" slot="actions" heading="Accede al panel"></iswc-session-menu>
     <iswc-theme-toggle slot="actions" scope="root"></iswc-theme-toggle>
     <usrs-app></usrs-app>
   </iswc-app-shell>

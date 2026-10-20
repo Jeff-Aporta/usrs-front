@@ -7,7 +7,7 @@
  *   - autentica contra /usrs/api (el kit no hace fetch ni guarda tokens),
  *   - pinta la vista <usrs-app> (tabla de usuarios o invitación a entrar).
  */
-import { iswcLoader as L } from "https://cdn.jsdelivr.net/gh/Jeff-Aporta/is-webcomponents@7ee7b872b431db52835da07d9ea189d7d64c2562/dist/cdn/core/loader.min.js";
+import { iswcLoader as L } from "https://cdn.jsdelivr.net/gh/Jeff-Aporta/is-webcomponents@aebd1850cde940e967076675ab422c7116c9909b/dist/cdn/core/loader.min.js";
 
 const API = "/usrs/api";
 const TAGS = [
@@ -93,7 +93,7 @@ class UsrsApp extends HTMLElement {
     }
     const filas = this.#users.map((u) => `
       <tr>
-        <td><iswc-icon icon="mdi:account-circle"></iswc-icon> ${esc(u.iusuario)}</td>
+        <td><iswc-icon icon="mdi:account-outline"></iswc-icon> ${esc(u.iusuario)}</td>
         <td>${esc(u.nombre ?? "—")}</td>
         <td>${u.bactivo === false ? '<iswc-tag color="warning">inactivo</iswc-tag>' : '<iswc-tag color="success">activo</iswc-tag>'}</td>
       </tr>`).join("");
@@ -150,26 +150,7 @@ async function onLogout() {
   aviso("Sesión cerrada");
 }
 
-/**
- * Inserta <iswc-session-menu> en la barra ya definido y desconectado.
- * Workaround del kit @7ee7b872: cuando el <iswc-login> interno (del <iswc-login-dropdown>) se
- * actualiza ya conectado, su attributeChangedCallback pinta antes de connectedCallback y lanza
- * "Cannot set properties of undefined (setting 'textContent')". Se evita actualizando todo el
- * árbol (shadow incluido) fuera del documento con customElements.upgrade antes de insertarlo.
- */
-function montarSesion() {
-  if ($("sesion")) return;
-  const sesion = document.createElement("iswc-session-menu");
-  sesion.id = "sesion";
-  sesion.slot = "actions";
-  sesion.setAttribute("heading", "Accede al panel");
-  for (let i = 0; i < 4; i++) customElements.upgrade(sesion); // cada nivel de shadow crea el siguiente
-  const shell = $("shell");
-  shell?.insertBefore(sesion, shell.querySelector('[slot="actions"]'));
-}
-
 function cablear() {
-  montarSesion();
   pintarSesion();
   $("sesion")?.addEventListener("iswc-login-submit", onLogin);
   $("sesion")?.addEventListener("iswc-logout", onLogout);
