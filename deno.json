@@ -1,0 +1,28 @@
+{
+  "tasks": {
+    "gate": "deno task check && deno task test",
+    "check": "deno check --no-lock tests/ && deno lint src/ tests/",
+    "test": "deno test -A --no-check tests/",
+    "verificar:vps": "deno run -A --no-check tests/verificar-vps.ts"
+  },
+  "lint": {
+    "rules": {
+      "exclude": [
+        "no-explicit-any",
+        "no-import-prefix"
+      ]
+    }
+  },
+  "lock": false,
+  "compilerOptions": {
+    "lib": [
+      "deno.ns",
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ]
+  },
+  "imports": {
+    "playwright-core": "npm:playwright-core@1.63.0"
+  }
+}

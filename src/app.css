@@ -1,16 +1,13 @@
-/* app.css — global de usrs-front. Poppins siempre; tarjetas con aire. */
+/* app.css — global de usrs-front. La barra la pone <iswc-app-shell>; aquí solo la vista. */
 :root {
   --iswc-font-sans: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
-  /* El kit usa --iswc-card-spacing para el padding interno; lo subimos para que no se apriete. */
-  --iswc-card-spacing: clamp(1.25rem, 2.4vw, 2rem);
-  --usrs-gap: clamp(0.9rem, 1.6vw, 1.25rem);
+  --iswc-shell-font: var(--iswc-font-sans);
   --usrs-pad: clamp(1rem, 2.5vw, 2rem);
   --usrs-max: 72rem;
 }
 
 html, body {
   margin: 0;
-  min-height: 100%;
   background: var(--iswc-bg, #0b0f14);
   color: var(--iswc-text, #e6edf3);
   font-family: var(--iswc-font-sans);
@@ -18,41 +15,25 @@ html, body {
   text-rendering: optimizeLegibility;
 }
 html:not([data-app-ready]) body { visibility: hidden; }
-usrs-app { display: block; min-height: 100dvh; }
+usrs-app { display: block; }
 
-.shell { display: flex; flex-direction: column; min-height: 100dvh; }
-
-.barra {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: var(--usrs-gap);
-  padding: clamp(0.75rem, 1.6vw, 1.15rem) var(--usrs-pad);
-  border-bottom: 1px solid var(--iswc-border-soft, #1e2633);
-  position: sticky; top: 0; z-index: 5;
-  background: color-mix(in srgb, var(--iswc-bg, #0b0f14) 88%, transparent);
-  backdrop-filter: blur(8px);
-}
-.barra .marca { font-size: 1.05rem; letter-spacing: 0.01em; }
-.acciones { display: flex; align-items: center; gap: clamp(0.4rem, 1vw, 0.9rem); flex-wrap: wrap; }
-.usuario {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  color: var(--iswc-text-muted, #93a4b8); font-size: 0.9rem;
-}
+/* Padding de las tarjetas. Va sobre el host porque <iswc-card> fija --iswc-card-spacing en :host
+   con --iswc-space-l, token que el kit @7ee7b872 no define (quedaría en 0). */
+iswc-card { --iswc-card-spacing: clamp(1.25rem, 2.4vw, 2rem); }
 
 .vista {
-  width: 100%; max-width: var(--usrs-max); margin: 0 auto;
+  width: 100%; max-width: var(--usrs-max); margin: 0 auto; box-sizing: border-box;
   padding: clamp(1rem, 3vw, 2.25rem) var(--usrs-pad) clamp(2rem, 4vw, 3rem);
 }
-
-.login-shell { display: grid; place-items: center; padding: var(--usrs-pad); }
-.login-wrap { display: grid; gap: var(--usrs-gap); width: min(100%, 28rem); }
+.vista-anonima { max-width: 40rem; }
+.invitacion { margin: 0; color: var(--iswc-text-muted, #93a4b8); line-height: 1.6; }
 
 /* Tabla sin framework, con aire y responsive. */
-.tabla-wrap { overflow-x: auto; margin-top: calc(var(--iswc-card-spacing) * 0.25); }
+.tabla-wrap { overflow-x: auto; margin-top: 0.5rem; }
 .tabla { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-.tabla th, .tabla td { text-align: left; padding: 0.75rem 0.9rem; border-bottom: 1px solid var(--iswc-border-soft, #1e2633); }
+.tabla th, .tabla td { text-align: left; padding: 0.75rem 0.9rem; border-bottom: 1px solid var(--iswc-border-soft, #1e2633); vertical-align: middle; }
 .tabla th { color: var(--iswc-text-muted, #93a4b8); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
 .tabla tbody tr:hover { background: color-mix(in srgb, var(--iswc-accent, #2f6fed) 8%, transparent); }
-.tabla td { vertical-align: middle; }
 .tabla .vacio { text-align: center; color: var(--iswc-text-muted, #93a4b8); padding: 2rem; }
 
 iswc-icon { vertical-align: middle; }
